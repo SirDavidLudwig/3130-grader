@@ -1,19 +1,33 @@
-import { app, BrowserWindow } from "electron";
-// import * as path from "path";
-import { resolve } from "path";
+import { app as electronApp } from "electron";
+import Application from "./Application";
+import { AppEvent } from "./events";
 
-console.log("The path is", __dirname);
+/**
+ * Create the application
+ */
+let app = new Application(electronApp);
 
-function createWindow() {
-	const win = new BrowserWindow({
-		width: 800,
-		height: 600,
-		webPreferences: {
-			nodeIntegration: true
-		}
-	});
+/**
+ * Close the process when the app exits
+ */
+app.on(AppEvent.Exit, process.exit);
 
-	win.loadFile(resolve(__dirname, "ui/index.html"));
-}
+/**
+ * Boot the application
+ */
+app.boot();
 
-app.whenReady().then(createWindow);
+
+// function createWindow() {
+// 	const win = new BrowserWindow({
+// 		width: 800,
+// 		height: 600,
+// 		webPreferences: {
+// 			nodeIntegration: true
+// 		}
+// 	});
+
+// 	win.loadFile(resolve(__dirname, "ui/index.html"));
+// }
+
+// app.whenReady().then(createWindow);

@@ -9,7 +9,7 @@
     "build:src": "tsc",
     "build:resources": "webpack --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "watch": "npm run build:resources -- --watch",
-    "start": "electron .",
+    "start": "npm run build:src && electron .",
     "start:rebuild": "npm run build && npm run start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
