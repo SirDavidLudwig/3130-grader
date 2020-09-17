@@ -1,5 +1,10 @@
+// Packages
+@import '~bootstrap/scss/bootstrap.scss';
+@import '~simplemde/debug/simplemde.css';
+
+// Local Files
 @import 'variables';
 
 body {
-	background-color: $bg-color;
+	// background-color: $bg-color;
 }

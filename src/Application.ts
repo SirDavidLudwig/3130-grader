@@ -1,4 +1,6 @@
+import { BrowserWindow } from "electron";
 import { EventEmitter } from "events";
+import * as path from "path";
 import { AppEvent } from "./events";
 import { autobind } from "./util/utils";
 
@@ -24,7 +26,9 @@ export default class Application extends EventEmitter
 	 * Boot the application
 	 */
 	async boot() {
-		console.log("Booting...");
+		await this.__electronApp.whenReady();
+		// Additional modules/services here...
+		this.createWindow();
 	}
 
 	/**
@@ -42,5 +46,19 @@ export default class Application extends EventEmitter
 	async exit(code: number = 0) {
 		await this.shutdown();
 		this.emit(AppEvent.Exit, code);
+	}
+
+	// ---------------------------------------------------------------------------------------------
+
+	createWindow() {
+		const win = new BrowserWindow({
+			width: 800,
+			height: 600,
+			webPreferences: {
+				nodeIntegration: true
+			}
+		});
+		win.loadFile(path.resolve(__dirname, "ui/markdown_editor.html"));
+		return win;
 	}
 }
