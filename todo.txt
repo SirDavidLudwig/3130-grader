@@ -1,3 +1,6 @@
-Logisim JAR download:
-	https://downloads.sourceforge.net/project/circuit/2.7.x/2.7.1/logisim-generic-2.7.1.jar?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fcircuit%2Ffiles%2F2.7.x%2F2.7.1%2Flogisim-generic-2.7.1.jar%2Fdownload&ts=1600252603
-	Adjust timestamp on the end
+Grading Process:
+	Start:
+		Create grading window (always on top) top right corner.
+			- Has navigation buttons for cycling between circuits
+			- Contains grade buttons for adding feedback
+	Open Logisim

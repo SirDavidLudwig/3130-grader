@@ -20,6 +20,7 @@ export default class Application extends EventEmitter
 		super();
 		this.__electronApp = app;
 		autobind(this);
+		app.on("quit", this.onQuit);
 	}
 
 	/**
@@ -29,13 +30,40 @@ export default class Application extends EventEmitter
 		await this.__electronApp.whenReady();
 		// Additional modules/services here...
 		this.createWindow();
+
+		return true;
 	}
 
 	/**
 	 * Shut the application down
 	 */
-	async shutdown() {
-		console.log("Shutting down...")
+	protected async shutdown() {
+		console.log("Shutting down...");
+		const end = Date.now() + 1000;
+		while (Date.now() < end) continue;
+		console.log("Shutdown successful");
+	}
+
+	// Event Handling ------------------------------------------------------------------------------
+
+	/**
+	 * Shutdown the application before quitting...
+	 */
+	async onQuit() {
+		await this.shutdown();
+	}
+
+	// Methods -------------------------------------------------------------------------------------
+
+	/**
+	 * Execute the application
+	 */
+	exec() {
+		// Boot the application
+		if (!this.boot()) {
+			this.exit(1);
+			return;
+		}
 	}
 
 	/**
@@ -44,11 +72,8 @@ export default class Application extends EventEmitter
 	 * @param code The exit code
 	 */
 	async exit(code: number = 0) {
-		await this.shutdown();
-		this.emit(AppEvent.Exit, code);
+		this.__electronApp.exit(code);
 	}
-
-	// ---------------------------------------------------------------------------------------------
 
 	createWindow() {
 		const win = new BrowserWindow({
@@ -58,7 +83,7 @@ export default class Application extends EventEmitter
 				nodeIntegration: true
 			}
 		});
-		win.loadFile(path.resolve(__dirname, "ui/markdown_editor.html"));
+		win.loadFile(path.resolve(__dirname, "ui/index.html"));
 		return win;
 	}
 }

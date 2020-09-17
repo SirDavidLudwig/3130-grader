@@ -6,16 +6,14 @@
 </template>
 
 <script lang="ts">
-
 import { Component, Vue } from "vue-property-decorator";
+import Router from "vue-router";
 
 @Component
 export default class TestComponent extends Vue
 {
 	loadEditor() {
-		console.log("Navigating...")
 		let result = this.$router.push({ name: "editor" });
-		console.log(result);
 	}
 
 	mounted() {
